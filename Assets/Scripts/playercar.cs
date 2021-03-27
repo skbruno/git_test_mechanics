@@ -31,6 +31,10 @@ public class playercar : MonoBehaviour
     public float maxwhellturn = 25f;
 
 
+    private int nextcheck;
+    public int lapscheck;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -109,7 +113,24 @@ public class playercar : MonoBehaviour
             rigi.velocity = rigi.velocity.normalized * maxspeed;
         }
 
-        Debug.Log(rigi.velocity.magnitude);
+        //Debug.Log(rigi.velocity.magnitude);
 
+    }
+
+
+    public void Checkpointhit (int checknumber)
+    {
+        //Debug.Log(checknumber);
+        if(checknumber == nextcheck)
+        {
+            nextcheck++;
+            
+
+            if (nextcheck == Race_Menager.instance.allcheckpoint.Length)
+            {
+                nextcheck = 0;
+                lapscheck++;
+            }
+        }
     }
 }
