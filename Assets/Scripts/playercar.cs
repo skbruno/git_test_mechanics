@@ -40,6 +40,8 @@ public class playercar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        //input carro
         speedinput = 0f;
         if (Input.GetAxis("Vertical") > 0)
         {
@@ -48,19 +50,24 @@ public class playercar : MonoBehaviour
         }
         else if (Input.GetAxis("Vertical") < 0)
         {
-            speedinput = Input.GetAxis("Vertical") * fowardaccel * 1000f;
+            speedinput = Input.GetAxis("Vertical") * reverseaccel * 1000f;
         }
 
         turninput = Input.GetAxis("Horizontal");
 
+
+        //virar só quando estiver em movimento
         if (isground)
         {
             transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + new Vector3(0f, turninput * turnstrenght * Time.deltaTime * Input.GetAxis("Vertical"), 0f));
         }
 
-        whellfrontleft.localRotation = Quaternion.Euler(whellfrontleft.localRotation.eulerAngles.x, (turninput * maxwhellturn) - 180f, whellfrontleft.localRotation.eulerAngles.y);
 
-        whellfrontright.localRotation = Quaternion.Euler(whellfrontright.localRotation.eulerAngles.x, turninput * maxwhellturn, whellfrontright.localRotation.eulerAngles.y);
+
+        //virar a roda do carro
+        whellfrontleft.localRotation = Quaternion.Euler(whellfrontleft.localRotation.eulerAngles.x, (turninput * maxwhellturn) - 180f, whellfrontleft.localRotation.eulerAngles.z);
+
+        whellfrontright.localRotation = Quaternion.Euler(whellfrontright.localRotation.eulerAngles.x, turninput * maxwhellturn , whellfrontright.localRotation.eulerAngles.z);
 
         transform.position = rigi.transform.position;
     }
@@ -78,6 +85,8 @@ public class playercar : MonoBehaviour
             transform.rotation = Quaternion.FromToRotation(transform.up, hit.normal) * transform.rotation;
         }
 
+
+        //acelerrar o carro
         if (isground)
         {
             rigi.drag = dragground;
@@ -87,12 +96,20 @@ public class playercar : MonoBehaviour
                 rigi.AddForce(transform.forward * speedinput);
             }
         }
+        //gravidade quando o carro estiver no ar
         else
         {
             rigi.drag = 0.1f;
 
-            rigi.AddForce(Vector3.up * -gravityfoce * 100f);
+            rigi.AddForce(-Vector3.up * gravityfoce * 100f);
         }
+        //max speed do carro
+        if (rigi.velocity.magnitude > maxspeed)
+        {
+            rigi.velocity = rigi.velocity.normalized * maxspeed;
+        }
+
+        Debug.Log(rigi.velocity.magnitude);
 
     }
 }
