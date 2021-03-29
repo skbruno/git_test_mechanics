@@ -7,7 +7,7 @@ public class Race_Menager : MonoBehaviour
     public static Race_Menager instance;
     public Checkpoints[] allcheckpoint;
 
-    // Start is called before the first frame update
+    public int total_laps;
     
     void Awake() 
     {

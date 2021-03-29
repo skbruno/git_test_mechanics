@@ -39,6 +39,9 @@ public class playercar : MonoBehaviour
     void Start()
     {
         rigi.transform.parent = null;
+
+        //assim que iniciar ja mudar o numero de voltas
+        Ui_menager.instace.lap_counter_text.text = lapscheck + "/" + Race_Menager.instance.total_laps;
     }
 
     // Update is called once per frame
@@ -118,6 +121,7 @@ public class playercar : MonoBehaviour
     }
 
 
+    //contador de check point para voltar completas
     public void Checkpointhit (int checknumber)
     {
         //Debug.Log(checknumber);
@@ -129,8 +133,17 @@ public class playercar : MonoBehaviour
             if (nextcheck == Race_Menager.instance.allcheckpoint.Length)
             {
                 nextcheck = 0;
-                lapscheck++;
+                Lap_complete ();
             }
         }
+    }
+
+
+    // contador de voltas completadas
+    public void Lap_complete ()
+    {
+        lapscheck++;
+
+        Ui_menager.instace.lap_counter_text.text = lapscheck + "/" + Race_Menager.instance.total_laps;
     }
 }
