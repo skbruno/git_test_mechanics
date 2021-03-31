@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -35,20 +35,43 @@ public class playercar : MonoBehaviour
     public int lapscheck;
 
 
+
+
+    public bool isai;
+    public int currenttarget;
+    private Vector3 targetpoint;
+    public float aiacceleratespeed =1f;
+    public float iaturnspeed = .8f;
+    public float aireachpointrange = 5f;
+    public float aipointvariance = 3f;
+    private float aispeedinput;
+    public float aimaxturn =15f;
+
+
+
     // Start is called before the first frame update
     void Start()
     {
         rigi.transform.parent = null;
 
+        if (isai)
+        {
+            targetpoint = Race_Menager.instance.allcheckpoint[currenttarget].transform.position;
+            Randomiatarget();
+        }
+
         //assim que iniciar ja mudar o numero de voltas
-        Ui_menager.instace.lap_counter_text.text = lapscheck + "/" + Race_Menager.instance.total_laps;
+        
     }
 
     // Update is called once per frame
     void Update()
     {
 
-        //input carro
+        if (!isai)
+        {
+
+            //input carro
         speedinput = 0f;
         if (Input.GetAxis("Vertical") > 0)
         {
@@ -61,6 +84,55 @@ public class playercar : MonoBehaviour
         }
 
         turninput = Input.GetAxis("Horizontal");
+
+        } else 
+        {
+
+            targetpoint.y = transform.position.y;
+
+            if (Vector3.Distance(transform.position, targetpoint) < aireachpointrange)
+            {
+                currenttarget ++;;
+                if(currenttarget >= Race_Menager.instance.allcheckpoint.Length)
+                {
+                    currenttarget = 0;
+                }
+
+                targetpoint = Race_Menager.instance.allcheckpoint[currenttarget].transform.position;
+                Randomiatarget();
+
+
+            }
+
+
+            // NAO MEXER (POR ENQUANTO) AQUI NAO SEI O QUE FIZ MAS FUNCIONOU (EM PARTES)
+
+            Vector3 targetdir = targetpoint - transform.position;
+            float angle = Vector3.Angle(targetdir, transform.forward);
+
+            Vector3 localpos = transform.InverseTransformPoint(targetpoint);
+            if (localpos.x <0f)
+            {
+                angle = -angle;
+            }
+
+            turninput = Mathf.Clamp( angle / aimaxturn, -1f, 1f);
+
+            if (Mathf.Abs(angle) < aimaxturn)
+            {
+                aispeedinput = Mathf.MoveTowards(aispeedinput, 1f, aiacceleratespeed);
+            } else
+            {
+                aispeedinput = Mathf.MoveTowards(aispeedinput, iaturnspeed,aiacceleratespeed);
+            }
+
+
+
+
+            aispeedinput = 100f;
+            speedinput = aispeedinput * fowardaccel *10;
+        }
+        
 
 
         //virar só quando estiver em movimento
@@ -144,6 +216,17 @@ public class playercar : MonoBehaviour
     {
         lapscheck++;
 
-        Ui_menager.instace.lap_counter_text.text = lapscheck + "/" + Race_Menager.instance.total_laps;
+
+        if (!isai)
+        {
+            Ui_menager.instance.lap_counter_text.text = lapscheck + "/" + Race_Menager.instance.total_laps;
+        }
+
+        
+    }
+
+    public void Randomiatarget ()
+    {
+        targetpoint += new Vector3(Random.Range(-aipointvariance, aipointvariance), 0f,Random.Range(-aipointvariance, aipointvariance) );
     }
 }
