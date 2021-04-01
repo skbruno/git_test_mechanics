@@ -48,6 +48,9 @@ public class playercar : MonoBehaviour
     public float aimaxturn =15f;
 
 
+    public GameObject roda;
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -76,11 +79,13 @@ public class playercar : MonoBehaviour
         if (Input.GetAxis("Vertical") > 0)
         {
             speedinput = Input.GetAxis("Vertical") * fowardaccel * 1000f;
+            roda.transform.Rotate (new Vector3(x: 0, y:0,z:2));
 
         }
         else if (Input.GetAxis("Vertical") < 0)
         {
             speedinput = Input.GetAxis("Vertical") * reverseaccel * 1000f;
+            roda.transform.Rotate (new Vector3(x: 0, y:0,z:-2));
         }
 
         turninput = Input.GetAxis("Horizontal");
