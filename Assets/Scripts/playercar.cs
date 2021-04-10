@@ -9,7 +9,7 @@ public class playercar : MonoBehaviour
 
     public float fowardaccel = 8f;
     public float reverseaccel = 4f;
-    public float maxspeed = 5f;
+    public float maxspeed = 45f;
     public float turnstrenght = 180f;
     public float gravityfoce = 10f;
 
@@ -59,11 +59,15 @@ public class playercar : MonoBehaviour
     public float boost;
     public float speedcooldown;
     public float normalspeed;
+    private bool goboost = true;
+
+    private float testespeedboost;
 
 
     // Start is called before the first frame update
     void Start()
     {
+
         instance = this;
 
         rigi.transform.parent = null;
@@ -195,11 +199,18 @@ public class playercar : MonoBehaviour
             normalspeed = speedinput;
 
              if (Input.GetAxis("Fire3") > 0)
-                {    
+                {   
+                  Ui_menager.instance.Barspecial(25);
+                   
+
+                   //implementação keep calming
+                   if (Ui_menager.instance.staminabar.value == 25)
+                   {
                     speedinput = boost;
                     rigi.AddForce(transform.forward * speedinput);
-                    StartCoroutine("speedduration");
-                    Debug.Log("boost");
+
+                    ////implementação keep calming
+                   }
                 }
 
         }
@@ -215,6 +226,8 @@ public class playercar : MonoBehaviour
         if (rigi.velocity.magnitude > maxspeed)
         {
             rigi.velocity = rigi.velocity.normalized * maxspeed;
+
+            testespeedboost = rigi.velocity.magnitude;
         }
 
         Debug.Log(rigi.velocity.magnitude);    
@@ -223,12 +236,7 @@ public class playercar : MonoBehaviour
 
 
 
-    IEnumerator speedduration ()
-    {
-        yield return new WaitForSeconds(speedcooldown);
-        speedinput = normalspeed;
-
-    }
+    
 
 
     //contador de check point para voltar completas
