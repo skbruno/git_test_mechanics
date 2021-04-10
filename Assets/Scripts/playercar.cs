@@ -15,6 +15,8 @@ public class playercar : MonoBehaviour
 
     public float dragground = 3f;
 
+    
+    [SerializeField]
     private float speedinput;
     private float turninput;
 
@@ -51,10 +53,19 @@ public class playercar : MonoBehaviour
     public GameObject roda;
 
 
+    public static playercar instance;
+
+
+    public float boost;
+    public float speedcooldown;
+    public float normalspeed;
+
 
     // Start is called before the first frame update
     void Start()
     {
+        instance = this;
+
         rigi.transform.parent = null;
 
         if (isai)
@@ -177,9 +188,22 @@ public class playercar : MonoBehaviour
 
             if (Mathf.Abs(speedinput) > 0)
             {
-                rigi.AddForce(transform.forward * speedinput);
+                rigi.AddForce(transform.forward * speedinput);   
             }
+
+            //boost car 
+            normalspeed = speedinput;
+
+             if (Input.GetAxis("Fire3") > 0)
+                {    
+                    speedinput = boost;
+                    rigi.AddForce(transform.forward * speedinput);
+                    StartCoroutine("speedduration");
+                    Debug.Log("boost");
+                }
+
         }
+        
         //gravidade quando o carro estiver no ar
         else
         {
@@ -193,7 +217,16 @@ public class playercar : MonoBehaviour
             rigi.velocity = rigi.velocity.normalized * maxspeed;
         }
 
-        //Debug.Log(rigi.velocity.magnitude);
+        Debug.Log(rigi.velocity.magnitude);    
+
+    }
+
+
+
+    IEnumerator speedduration ()
+    {
+        yield return new WaitForSeconds(speedcooldown);
+        speedinput = normalspeed;
 
     }
 
@@ -227,7 +260,6 @@ public class playercar : MonoBehaviour
             Ui_menager.instance.lap_counter_text.text = lapscheck + "/" + Race_Menager.instance.total_laps;
         }
 
-        
     }
 
     public void Randomiatarget ()

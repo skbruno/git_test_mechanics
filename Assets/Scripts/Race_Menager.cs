@@ -25,6 +25,6 @@ public class Race_Menager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+    
     }
 }
