@@ -656,7 +656,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 1055242804}
   m_HandleRect: {fileID: 0}
-  m_Direction: 1
+  m_Direction: 0
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
@@ -1402,7 +1402,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 625686071}
-  m_LocalRotation: {x: -0.000000014901161, y: -0.00000003525199, z: 0.000000012376877,
+  m_LocalRotation: {x: 0.000000014901161, y: -0.000000024382523, z: 0.000000008560633,
     w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -2306,7 +2306,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.0000000012397412, y: 0.98578274, z: -0.16802512, w: 0.000000007273392}
+  m_LocalRotation: {x: 0.0000000027504654, y: 0.98578274, z: -0.16802512, w: 0.000000016136646}
   m_LocalPosition: {x: 58.5, y: 3.8, z: 9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -4425,7 +4425,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lap_counter_text: {fileID: 1444133109}
-  staminabar: {fileID: 284544355}
+  specialbar: {fileID: 284544355}
+  cooldown: 5
+  specialbarrcode: 118
+  recover: 0
   wingame: {fileID: 716064347}
 --- !u!1 &1950506723
 GameObject:
@@ -4598,7 +4601,7 @@ PrefabInstance:
     - target: {fileID: 1506399125342246052, guid: 0f6740a5b557fb74b84c50ed7c092c5d,
         type: 3}
       propertyPath: speedcooldown
-      value: 2
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1506399125342246052, guid: 0f6740a5b557fb74b84c50ed7c092c5d,
         type: 3}

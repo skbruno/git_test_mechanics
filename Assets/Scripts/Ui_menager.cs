@@ -6,55 +6,98 @@ using TMPro;
 
 public class Ui_menager : MonoBehaviour
 {
+    //counter laps
     public static Ui_menager instance;
     public TMP_Text lap_counter_text;
 
 
+    //recover stamina
+    public Slider specialbar;
+    public float cooldown;
+    bool iscooldown = false;
+    public KeyCode specialbarrcode;
+    public float recover;
+    private WaitForSeconds regentick = new WaitForSeconds(20f);
 
-    //public Image specialbar;
-    //public float cooldown;
-    //bool iscooldown = false;
-    //public KeyCode specialbarrcode;
 
 
-
-    public Slider staminabar;
-
-    private int maxstamina = 100;
-    private int currentstamina;
-
-    private WaitForSeconds regentick = new WaitForSeconds(0.5f);
-
-    
-
+    //wingame
     public GameObject wingame;
+
 
     // Start is called before the first frame update
     void Start()
     {
         instance = this;
 
-
-        currentstamina = maxstamina;
-        staminabar.maxValue = maxstamina;
-        staminabar.value = maxstamina;
+       recover = specialbar.value;
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (playercar.instance.lapscheck == Race_Menager.instance.total_laps)
         {
             wingame.SetActive(true);
         }
+        boost();    
+    }
 
+    void boost ()
+    {
+        if (Input.GetKey(specialbarrcode) && iscooldown == false)
+        {
+           iscooldown = true;
+        }
 
-        
+        if (iscooldown)
+        {
+            specialbar.value -= 1 / cooldown * Time.deltaTime;
+
+            if (specialbar.value <= 0)
+            {
+                iscooldown = false;
+               
+            }
+                StartCoroutine(regenstamina());   
+        }
+    }
+
+    private IEnumerator regenstamina()
+    {
+        yield return new WaitForSeconds(5);
+
+        while (specialbar.value < recover)
+        {
+            // preciso consertar o bug que trava
+            //Debug.Log("voltou a PALHAÇADA");
+            specialbar.value += 1 / cooldown * Time.deltaTime;
+
+            yield return regentick;
+        }
     }
 
 
-    public void Barspecial (int amount)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /*public void Barspecial (int amount)
     {
 
         if(currentstamina - amount >= 0)
@@ -76,5 +119,10 @@ public class Ui_menager : MonoBehaviour
             staminabar.value = currentstamina;
              yield return regentick;
         }
-    }
+    } */
+
+
+
+
+
 }

@@ -60,8 +60,7 @@ public class playercar : MonoBehaviour
     public float speedcooldown;
     public float normalspeed;
     private bool goboost = true;
-
-    private float testespeedboost;
+    private WaitForSeconds quitdurantion = new WaitForSeconds(2f);
 
 
     // Start is called before the first frame update
@@ -200,19 +199,16 @@ public class playercar : MonoBehaviour
 
              if (Input.GetAxis("Fire3") > 0)
                 {   
-                  Ui_menager.instance.Barspecial(25);
                    
-
-                   //implementação keep calming
-                   if (Ui_menager.instance.staminabar.value == 25)
+                   if (Ui_menager.instance.specialbar.value > 0 && goboost == true)
                    {
                     speedinput = boost;
                     rigi.AddForce(transform.forward * speedinput);
-
-                    ////implementação keep calming
-                   }
+                    Debug.Log("VAI DESGRAÇA");
+                    StartCoroutine(speedduration());
+                   
+                   }  
                 }
-
         }
         
         //gravidade quando o carro estiver no ar
@@ -227,7 +223,6 @@ public class playercar : MonoBehaviour
         {
             rigi.velocity = rigi.velocity.normalized * maxspeed;
 
-            testespeedboost = rigi.velocity.magnitude;
         }
 
         Debug.Log(rigi.velocity.magnitude);    
@@ -235,9 +230,29 @@ public class playercar : MonoBehaviour
     }
 
 
+    //coisas do boost
+    /*IEnumerator stopandcontinue ()
+    {
+        yield return new WaitForSecondsRealtime(15f);
+        speedinput = normalspeed;
+        goboost = true;   
+        //Debug.Log("voltou a PALHAÇADA");
+    } */
 
-    
+    IEnumerator speedduration () 
+    {
 
+        yield return new WaitForSecondsRealtime(speedcooldown);
+         goboost = false; 
+        //Debug.Log("AACABOU A PALHAÇADA");
+
+        yield return new WaitForSecondsRealtime(15f);
+        Debug.Log("louco PALHAÇADA");
+        speedinput = normalspeed;
+        goboost = true;   
+
+        yield return quitdurantion;
+    }
 
     //contador de check point para voltar completas
     public void Checkpointhit (int checknumber)
