@@ -16,8 +16,11 @@ public class playercar : MonoBehaviour
     public float dragground = 3f;
 
     
-    [SerializeField]
-    private float speedinput;
+
+    public float isntavelmaxspeed;
+
+    
+    public float speedinput;
     private float turninput;
 
     private bool isground;
@@ -66,6 +69,7 @@ public class playercar : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        isntavelmaxspeed = maxspeed;
 
         instance = this;
 
@@ -225,7 +229,7 @@ public class playercar : MonoBehaviour
 
         }
 
-        Debug.Log(rigi.velocity.magnitude);    
+        //Debug.Log(rigi.velocity.magnitude);    
 
     }
 
