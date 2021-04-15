@@ -23,6 +23,8 @@ public class Ui_menager : MonoBehaviour
 
     //wingame
     public GameObject wingame;
+    public GameObject exitgame;
+    public GameObject reloadgame;
 
 
     // Start is called before the first frame update
@@ -39,9 +41,13 @@ public class Ui_menager : MonoBehaviour
         if (playercar.instance.lapscheck == Race_Menager.instance.total_laps)
         {
             wingame.SetActive(true);
+            exitgame.SetActive(true);
+            reloadgame.SetActive(true);
+
         }
         boost();    
     }
+
 
     void boost ()
     {
