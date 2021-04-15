@@ -208,7 +208,7 @@ public class playercar : MonoBehaviour
                    {
                     speedinput = boost;
                     rigi.AddForce(transform.forward * speedinput);
-                    Debug.Log("VAI DESGRAÇA");
+                    //Debug.Log("VAI DESGRAÇA");
                     StartCoroutine(speedduration());
                    
                    }  
@@ -251,7 +251,7 @@ public class playercar : MonoBehaviour
         //Debug.Log("AACABOU A PALHAÇADA");
 
         yield return new WaitForSecondsRealtime(15f);
-        Debug.Log("louco PALHAÇADA");
+        //Debug.Log("louco PALHAÇADA");
         speedinput = normalspeed;
         goboost = true;   
 

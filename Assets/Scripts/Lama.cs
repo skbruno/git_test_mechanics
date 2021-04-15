@@ -21,7 +21,7 @@ public class Lama : MonoBehaviour
         if(other.gameObject.CompareTag ("Player") == true)
         {
             playercar.instance.maxspeed = 5f;
-            Debug.Log("entrou na lama");
+            //Debug.Log("entrou na lama");
         }    
     }
 
@@ -31,7 +31,7 @@ public class Lama : MonoBehaviour
         {
             StartCoroutine(exitlama());
             playercar.instance.maxspeed = playercar.instance.isntavelmaxspeed;
-            Debug.Log("entrou na lama");
+            //Debug.Log("entrou na lama");
         }    
     }
 
