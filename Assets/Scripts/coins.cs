@@ -21,7 +21,7 @@ public class coins : MonoBehaviour
          if (other.gameObject.CompareTag ("Player") == true)
         {
             //Debug.Log("Bateu");
-            Destroy(gameObject, 5);
+            Destroy(gameObject, 0.2f);
         }
     }
 }

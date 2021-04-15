@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class playercar : MonoBehaviour
 {
-    [SerializeField]
+    
+     [SerializeField]
     private Rigidbody rigi;
 
     public float fowardaccel = 8f;
@@ -293,4 +294,5 @@ public class playercar : MonoBehaviour
     {
         targetpoint += new Vector3(Random.Range(-aipointvariance, aipointvariance), 0f,Random.Range(-aipointvariance, aipointvariance) );
     }
+
 }

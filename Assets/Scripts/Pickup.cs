@@ -19,7 +19,7 @@ public class Pickup : MonoBehaviour
         {
             //Debug.Log("Bateu55");
 
-             Destroy(gameObject, 2);
+             Destroy(gameObject, 0.2f);
         }
     }
 }
